@@ -1,0 +1,83 @@
+class DistributionListsController < ApplicationController
+  # GET /distribution_lists
+  # GET /distribution_lists.xml
+  def index
+    @distribution_lists = DistributionList.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @distribution_lists }
+    end
+  end
+
+  # GET /distribution_lists/1
+  # GET /distribution_lists/1.xml
+  def show
+    @distribution_list = DistributionList.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @distribution_list }
+    end
+  end
+
+  # GET /distribution_lists/new
+  # GET /distribution_lists/new.xml
+  def new
+    @distribution_list = DistributionList.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.xml  { render :xml => @distribution_list }
+    end
+  end
+
+  # GET /distribution_lists/1/edit
+  def edit
+    @distribution_list = DistributionList.find(params[:id])
+  end
+
+  # POST /distribution_lists
+  # POST /distribution_lists.xml
+  def create
+    @distribution_list = DistributionList.new(params[:distribution_list])
+
+    respond_to do |format|
+      if @distribution_list.save
+        format.html { redirect_to(@distribution_list, :notice => 'Distribution list was successfully created.') }
+        format.xml  { render :xml => @distribution_list, :status => :created, :location => @distribution_list }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @distribution_list.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /distribution_lists/1
+  # PUT /distribution_lists/1.xml
+  def update
+    @distribution_list = DistributionList.find(params[:id])
+
+    respond_to do |format|
+      if @distribution_list.update_attributes(params[:distribution_list])
+        format.html { redirect_to(@distribution_list, :notice => 'Distribution list was successfully updated.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @distribution_list.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /distribution_lists/1
+  # DELETE /distribution_lists/1.xml
+  def destroy
+    @distribution_list = DistributionList.find(params[:id])
+    @distribution_list.destroy
+
+    respond_to do |format|
+      format.html { redirect_to(distribution_lists_url) }
+      format.xml  { head :ok }
+    end
+  end
+end

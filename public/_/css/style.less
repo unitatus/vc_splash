@@ -1,0 +1,378 @@
+@import "partials/reset";
+@import "partials/text";
+@import "partials/grid";
+@import "partials/mixins";
+@import "partials/menu";
+
+
+/* Color Options */
+/* Green */
+/*@color: #6b9031;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_green.png) top left no-repeat;
+}*/
+
+/* Blue */
+/*@color: #306192;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_blue.png) top left no-repeat;
+}*/
+
+/* Red */
+/*@color: #902020;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_red.png) top left no-repeat;
+}*/
+
+/* Orange */
+/*@color: #b23d12;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_orange.png) top left no-repeat;
+}*/
+
+/* Purple */
+/*@color: #64208d;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_purple.png) top left no-repeat;
+}*/
+
+/* Grey */
+/*@color: #5b5959;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_grey.png) top left no-repeat;
+}*/
+
+/* Magenta */
+/*@color: #ba176c;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_pink.png) top left no-repeat;
+}*/
+
+
+
+
+
+body {
+  color: @gray-dark;
+  background: white url("../img/bg_body_light.png") top left repeat-x;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
+  p {
+    .text-shadow(0 1px 0 #fff);
+    
+    color: @gray-light;
+    text-align: center;
+  }
+}
+
+div.page {
+  .container();
+  .clearfix();
+  
+  background: transparent url("../img/bg_body_glow.png") center 190px no-repeat;
+}
+
+
+/* Header
+==========================================================*/
+header {
+  .grid_8();
+  .push_2();
+   
+  div.logo {           
+    border-bottom: 1px solid #999999;
+    margin-top: 50px;
+    text-align: center;
+
+    img {
+      margin-bottom: 50px;
+    }
+  }
+   
+  h1 {
+      display: none;
+  }
+  
+  h2 {
+    .text-shadow(0 1px 0 #fff);
+    
+    border-top: 1px solid #f2f2f2;
+    font-family: Arvo;
+    font-size: 42px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    padding-top: 60px;
+    text-align: center;
+  }
+   
+}
+
+/* Main Countdown
+==========================================================*/
+section.content {
+  .grid_8();
+  .push_2();
+  
+  z-index: 3000;
+  
+  p {
+    margin-bottom: 40px;
+  }
+  
+  .countdown {
+    .clearfix();
+    
+    position: relative;
+    text-align: center;
+    
+    span.countdown_section {
+      .grid_2();
+      .countdown_color();
+      .text-shadow(0 1px 0 lighten(@color, 0%);
+      
+      
+      color: darken(@color, 25%);
+      font: 24px/1em 'Oswald', "Helvetica Neue", Helvetica, Arial, sans-serif;
+      height: 139px;
+      text-transform: uppercase;
+      
+      &.first {
+        margin-left: 0; 
+      }
+      
+      &.last {
+        margin-right: 0;
+      }
+
+      span.countdown_amount {
+        .text-shadow(0 0 5px #444);
+        
+        color: #ededed;
+        display: block;
+        font: 80px/1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        margin-top: -5px;
+        position: relative;
+        top: 15px;
+        width: 140px;
+      }
+    }
+  }
+}
+
+
+/* Sign Up
+==========================================================*/
+section.signup {
+  .grid_8();
+  .push_2();
+  .text-shadow(0 1px 0 #fff);
+  
+  background: transparent url("../img/bg_signup.png") top left no-repeat;
+  color: #b5adab;
+  font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  height: 307px;
+  position: relative;
+  top: -60px;
+  z-index: 1000;
+
+  
+  label {
+    text-shadow: none;
+    
+    color: #B5ADAB;
+    display: block;
+    margin-top: 175px;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+  
+  div.notification_signup {
+    background: transparent url("../img/bg_input_form.png") bottom left repeat-x;
+    height: 47px;
+    margin-left: 40px;
+    overflow: hidden;
+    position: relative;
+    width: 540px;
+    
+    input {
+      .text-shadow(0 1px 0 #fff);
+      
+      background-color: transparent;
+      border: none;
+      color: @gray-light;
+      float: left;
+      font-size: 18px;
+      height: 47px;
+      margin: 0;
+      padding: 0 18px;
+      width: 370px;
+    }
+    
+    button {
+      .text-shadow(1px 0 3px #444);
+      
+      background-color: @color;
+      background-image: url("../img/bg_signup_btn.png"); 
+      background-position: bottom left;
+      background-repeat:repeat-x;
+      border: none;
+      color: #fff;
+      font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 18px;
+      height: 47px;
+      line-height: 1;
+      margin: 0;
+      padding: 0 14px;
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 0;
+      text-align: center;
+      
+      
+      &:hover {
+        background-color: lighten(@color, 20%);
+      }
+      
+      &:active {
+        background-color: desaturate(@color, 30%);
+      }
+      
+
+    }
+  }
+
+  aside{
+    z-index:90000;
+    position: relative;
+    top: -193px;
+    
+    .status-message {
+      display: none;
+      p {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        display: block;
+        padding: 20px;
+        margin: 0;
+        
+        
+      }
+    }
+    
+    #sending-message {
+      background-color: @yellow;
+      p {
+        .text-shadow(0 -1px 0 darken(@yellow, 10%));
+        .text-shadow(0 1px 0 lighten(@yellow, 10%));
+        color: darken(@yellow, 40%);
+      }
+    }
+    
+    #success-message {
+      background-color: @color;
+      p {
+        .text-shadow(0 -1px 0 darken(@color, 10%));
+        .text-shadow(0 1px 0 lighten(@color, 10%));
+        color: darken(@color, 20%);
+      }
+    }
+    
+    #failure-message, #incomplete-message, #invalid-email {
+      background-color: @red;
+      p {
+        .text-shadow(0 -1px 0 darken(@red, 10%));
+        .text-shadow(0 1px 0 lighten(@red, 10%));
+        color: darken(@red, 20%);
+      }
+    }
+    
+  }
+}
+
+
+/* Footer
+==========================================================*/
+footer {
+  .grid_8();
+  .push_2();
+  
+  background: transparent url("../img/bg_footer.png") top left no-repeat;
+  height: 60px;
+  position: relative;
+  top: -60px;
+  
+  section.connections {
+    float: right;
+    
+    ul {
+      margin: 17px 10px 0 0;
+      
+      li {
+        .border-radius();
+        .hide-text();
+        
+        background-color: @color;
+        display: block;
+        float: left;
+        margin-right: 10px;
+        
+        &.facebook {
+          background: @color url("../img/icns_facebook.png") top left no-repeat;
+        }
+        &.twitter {
+          background: @color url("../img/icns_twitter.png") top left no-repeat;
+        }
+        &.linkedin {
+          background: @color url("../img/icns_linkedin.png") top left no-repeat;
+        }
+        &.flickr {
+          background: @color url("../img/icns_flickr.png") top left no-repeat;
+        }
+        &.tumblr {
+          background: @color url("../img/icns_tumblr.png") top left no-repeat;
+        }
+        
+        &:hover {
+          background-color: #121212;
+          border-bottom: 1px solid #333;
+        }
+        
+        a {
+          display: block;
+          height: 30px;
+          width: 30px;
+          z-index: 3000;
+        }
+      }
+    }
+  }
+}
+
+/* IE Fixes
+================================================================*/
+.ie7 {
+  .signup{
+     input {
+      .text-shadow(0 1px 0 #fff);
+
+      background-color: transparent;
+      border: none;
+      color: @gray-light;
+      float: left;
+      font-size: 18px;
+      height: 47px;
+      margin: 0;
+      padding: 18px 0px;
+      line-height: 47px;
+      width: 370px;
+      display: none;
+    }
+
+    button {
+      width: 175px;
+    }
+  }
+}

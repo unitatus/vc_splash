@@ -1,0 +1,21 @@
+<h1>Listing distribution_lists</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @distribution_lists.each do |distribution_list| %>
+  <tr>
+    <td><%= link_to 'Show', distribution_list %></td>
+    <td><%= link_to 'Edit', edit_distribution_list_path(distribution_list) %></td>
+    <td><%= link_to 'Destroy', distribution_list, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Distribution list', new_distribution_list_path %>

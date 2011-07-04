@@ -1,0 +1,901 @@
+/* `XHTML, HTML4, HTML5 Reset
+----------------------------------------------------------------------------------------------------*/
+a,
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+b,
+big,
+blockquote,
+body,
+canvas,
+caption,
+center,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+dialog,
+div,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+font,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+hr,
+html,
+i,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+meter,
+nav,
+object,
+ol,
+output,
+p,
+pre,
+progress,
+q,
+rp,
+rt,
+ruby,
+s,
+samp,
+section,
+small,
+span,
+strike,
+strong,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+time,
+tr,
+tt,
+u,
+ul,
+var,
+video,
+xmp {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
+html, body {
+  height: 100%;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  /*
+  Override the default (display: inline) for
+  browsers that do not recognize HTML5 tags.
+
+  IE8 (and lower) requires a shiv:
+  http://ejohn.org/blog/html5-shiv
+*/
+
+  display: block;
+}
+b, strong {
+  /*
+  Makes browsers agree.
+  IE + Opera = font-weight: bold.
+  Gecko + WebKit = font-weight: bolder.
+*/
+
+  font-weight: bold;
+}
+img {
+  color: transparent;
+  font-size: 0;
+  vertical-align: middle;
+  /*
+  For IE.
+  http://css-tricks.com/ie-fix-bicubic-scaling-for-images
+*/
+
+  -ms-interpolation-mode: bicubic;
+}
+li {
+  /*
+  For IE6 + IE7.
+*/
+
+  display: list-item;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+th, td, caption {
+  font-weight: normal;
+  vertical-align: top;
+  text-align: left;
+}
+svg {
+  /*
+  For IE9.
+*/
+
+  overflow: hidden;
+}
+body {
+  font-size: 16px;
+  line-height: 1.25em;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  margin: 0;
+  font-size: 1.5em;
+  line-height: 0.8333333333333334em;
+  margin-bottom: 0.8333333333333334em;
+}
+h2 {
+  margin: 0;
+  font-size: 1.375em;
+  line-height: 0.9090909090909091em;
+  margin-bottom: 0.9090909090909091em;
+}
+h3 {
+  margin: 0;
+  font-size: 1.25em;
+  line-height: 1em;
+  margin-bottom: 1em;
+}
+h4 {
+  margin: 0;
+  font-size: 1.125em;
+  line-height: 1.1111111111111112em;
+  margin-bottom: 1.1111111111111112em;
+}
+p,
+ul,
+blockquote,
+pre,
+td,
+th,
+label {
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.25em;
+  margin-bottom: 1.25em;
+}
+p.small {
+  margin: 0;
+  font-size: 0.875em;
+  line-height: 1.4285714285714286em;
+  margin-bottom: 1.4285714285714286em;
+}
+table {
+  border-collapse: collapse;
+  margin-bottom: 1.25em;
+}
+/*
+	960 Grid System ~ Core CSS.
+	Learn more ~ http://960.gs/
+
+	Licensed under GPL and MIT.
+*/
+/* `Containers
+------------------------------------*/
+.container {
+  margin: 0 auto;
+  width: 960px;
+}
+/* `Grid >> Global
+------------------------------------*/
+.grid {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+/* `Children
+------------------------------------*/
+.alpha {
+  margin-left: 0;
+}
+.omega {
+  margin-right: 0;
+}
+/* `Grid
+------------------------------------*/
+.grid_1 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 60px;
+}
+.grid_2 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 140px;
+}
+.grid_3 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 220px;
+}
+.grid_4 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 300px;
+}
+.grid_5 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 380px;
+}
+.grid_6 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 460px;
+}
+.grid_7 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 540px;
+}
+.grid_8 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 620px;
+}
+.grid_9 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 700px;
+}
+.grid_10 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 780px;
+}
+.grid_11 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 860px;
+}
+.grid_12 {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 940px;
+}
+/* `Prefix
+------------------------------------*/
+.prefix_1 {
+  padding-left: 80px;
+}
+.prefix_2 {
+  padding-left: 160px;
+}
+.prefix_3 {
+  padding-left: 240px;
+}
+.prefix_4 {
+  padding-left: 320px;
+}
+.prefix_5 {
+  padding-left: 400px;
+}
+.prefix_6 {
+  padding-left: 480px;
+}
+.prefix_7 {
+  padding-left: 560px;
+}
+.prefix_8 {
+  padding-left: 640px;
+}
+.prefix_9 {
+  padding-left: 720px;
+}
+.prefix_10 {
+  padding-left: 800px;
+}
+.prefix_11 {
+  padding-left: 880px;
+}
+/* `Suffix
+------------------------------------*/
+.suffix_1 {
+  padding-right: 80px;
+}
+.suffix_2 {
+  padding-right: 160px;
+}
+.suffix_3 {
+  padding-right: 240px;
+}
+.suffix_4 {
+  padding-right: 320px;
+}
+.suffix_5 {
+  padding-right: 400px;
+}
+.suffix_6 {
+  padding-right: 480px;
+}
+.suffix_7 {
+  padding-right: 560px;
+}
+.suffix_8 {
+  padding-right: 640px;
+}
+.suffix_9 {
+  padding-right: 720px;
+}
+.suffix_10 {
+  padding-right: 800px;
+}
+.suffix_11 {
+  padding-right: 880px;
+}
+/* `Push
+------------------------------------*/
+.push_1 {
+  left: 80px;
+}
+.push_2 {
+  left: 160px;
+}
+.push_3 {
+  left: 240px;
+}
+.push_4 {
+  left: 320px;
+}
+.push_5 {
+  left: 400px;
+}
+.push_6 {
+  left: 480px;
+}
+.push_7 {
+  left: 560px;
+}
+.push_8 {
+  left: 640px;
+}
+.push_9 {
+  left: 720px;
+}
+.push_10 {
+  left: 800px;
+}
+.push_11 {
+  left: 880px;
+}
+/* `Pull
+------------------------------------*/
+.pull_1 {
+  left: -80px;
+}
+.pull_2 {
+  left: -160px;
+}
+.pull_3 {
+  left: -240px;
+}
+.pull_4 {
+  left: -320px;
+}
+.pull_5 {
+  left: -400px;
+}
+.pull_6 {
+  left: -480px;
+}
+.pull_7 {
+  left: -560px;
+}
+.pull_8 {
+  left: -640px;
+}
+.pull_9 {
+  left: -720px;
+}
+.pull_10 {
+  left: -800px;
+}
+.pull_11 {
+  left: -880px;
+}
+/* `Clear
+------------------------------------*/
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+.clearfix {
+  zoom: 1;
+}
+.clearfix:after {
+  display: block;
+  visibility: hidden;
+  height: 0;
+  clear: both;
+  content: ".";
+}
+.hide-text {
+  text-indent: -119988em;
+  overflow: hidden;
+  text-align: left;
+}
+body {
+  margin: 0px;
+  padding: 0px;
+}
+#style_menu {
+  position: absolute;
+  cursor: pointer;
+  top: 50px;
+  left: 0px;
+  z-index: 9999;
+  width: 120px;
+  height: 50px;
+}
+#style_menu .label {
+  padding-left: 10px;
+  line-height: 50px;
+  font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  background: #000;
+  color: #fff;
+}
+ul.color_options {
+  display: none;
+}
+ul.color_options li {
+  cursor: pointer;
+}
+ul.color_options li.green a:hover {
+  border-left: 5px solid #94b359;
+}
+ul.color_options li.blue a:hover {
+  border-left: 5px solid #3b78b4;
+}
+ul.color_options li.red a:hover {
+  border-left: 5px solid #902020;
+}
+ul.color_options li.purple a:hover {
+  border-left: 5px solid #64208d;
+}
+ul.color_options li.orange a:hover {
+  border-left: 5px solid #b23d12;
+}
+ul.color_options li.magenta a:hover {
+  border-left: 5px solid #ba176c;
+}
+ul.color_options li.grey a:hover {
+  border-left: 5px solid #5b5959;
+}
+ul.color_options li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  background-color: #000;
+  border-top: 1px solid #333;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+/* Color Options */
+/* Green */
+.countdown_color {
+  background: transparent url(../img/bg_countdown_green.png) top left no-repeat;
+}
+/* Blue */
+/*@color: #306192;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_blue.png) top left no-repeat;
+}*/
+/* Red */
+/*@color: #902020;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_red.png) top left no-repeat;
+}*/
+/* Orange */
+/*@color: #b23d12;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_orange.png) top left no-repeat;
+}*/
+/* Purple */
+/*@color: #64208d;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_purple.png) top left no-repeat;
+}*/
+/* Grey */
+/*@color: #5b5959;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_grey.png) top left no-repeat;
+}*/
+/* Magenta */
+/*@color: #ba176c;
+.countdown_color {
+  background: transparent url(../img/bg_countdown_pink.png) top left no-repeat;
+}*/
+body {
+  color: #333333;
+  background: white url("../img/bg_body_light.png") top left repeat-x;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body p {
+  text-shadow: 0 1px 0 #ffffff;
+  color: #777777;
+  text-align: center;
+}
+div.page {
+  margin: 0 auto;
+  width: 960px;
+  zoom: 1;
+  background: transparent url("../img/bg_body_glow.png") center 190px no-repeat;
+}
+div.page:after {
+  display: block;
+  visibility: hidden;
+  height: 0;
+  clear: both;
+  content: ".";
+}
+/* Header
+==========================================================*/
+header {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 620px;
+  left: 160px;
+}
+header div.logo {
+  border-bottom: 1px solid #999999;
+  margin-top: 50px;
+  text-align: center;
+}
+header div.logo img {
+  margin-bottom: 50px;
+}
+header h1 {
+  display: none;
+}
+header h2 {
+  text-shadow: 0 1px 0 #ffffff;
+  border-top: 1px solid #f2f2f2;
+  font-family: Arvo;
+  font-size: 42px;
+  font-weight: normal;
+  margin-bottom: 20px;
+  padding-top: 60px;
+  text-align: center;
+}
+/* Main Countdown
+==========================================================*/
+section.content {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 620px;
+  left: 160px;
+  z-index: 3000;
+}
+section.content p {
+  margin-bottom: 40px;
+}
+section.content .countdown {
+  zoom: 1;
+  position: relative;
+  text-align: center;
+}
+section.content .countdown:after {
+  display: block;
+  visibility: hidden;
+  height: 0;
+  clear: both;
+  content: ".";
+}
+section.content .countdown span.countdown_section {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 140px;
+  background: transparent url(../img/bg_countdown_green.png) top left no-repeat;
+  text-shadow: 0 1px 0 #6b9031;
+  color: #243111;
+  font: 24px/1em 'Oswald', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  height: 139px;
+  text-transform: uppercase;
+}
+section.content .countdown span.countdown_section.first {
+  margin-left: 0;
+}
+section.content .countdown span.countdown_section.last {
+  margin-right: 0;
+}
+section.content .countdown span.countdown_section span.countdown_amount {
+  text-shadow: 0 0 5px #444444;
+  color: #ededed;
+  display: block;
+  font: 80px/1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  margin-top: -5px;
+  position: relative;
+  top: 15px;
+  width: 140px;
+}
+/* Sign Up
+==========================================================*/
+section.signup {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 620px;
+  left: 160px;
+  text-shadow: 0 1px 0 #ffffff;
+  background: transparent url("../img/bg_signup.png") top left no-repeat;
+  color: #b5adab;
+  font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  height: 307px;
+  position: relative;
+  top: -60px;
+  z-index: 1000;
+}
+section.signup label {
+  text-shadow: none;
+  color: #B5ADAB;
+  display: block;
+  margin-top: 175px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+section.signup div.notification_signup {
+  background: transparent url("../img/bg_input_form.png") bottom left repeat-x;
+  height: 47px;
+  margin-left: 40px;
+  overflow: hidden;
+  position: relative;
+  width: 540px;
+}
+section.signup div.notification_signup input {
+  text-shadow: 0 1px 0 #ffffff;
+  background-color: transparent;
+  border: none;
+  color: #777777;
+  float: left;
+  font-size: 18px;
+  height: 47px;
+  margin: 0;
+  padding: 0 18px;
+  width: 370px;
+}
+section.signup div.notification_signup button {
+  text-shadow: 1px 0 3px #444444;
+  background-color: #6b9031;
+  background-image: url("../img/bg_signup_btn.png");
+  background-position: bottom left;
+  background-repeat: repeat-x;
+  border: none;
+  color: #fff;
+  font-family: Arvo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  height: 47px;
+  line-height: 1;
+  margin: 0;
+  padding: 0 14px;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: center;
+}
+section.signup div.notification_signup button:hover {
+  background-color: #9fc85f;
+}
+section.signup div.notification_signup button:active {
+  background-color: #65734e;
+}
+section.signup aside {
+  z-index: 90000;
+  position: relative;
+  top: -193px;
+}
+section.signup aside .status-message {
+  display: none;
+}
+section.signup aside .status-message p {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  display: block;
+  padding: 20px;
+  margin: 0;
+}
+section.signup aside #sending-message {
+  background-color: #ffc40d;
+}
+section.signup aside #sending-message p {
+  text-shadow: 0 -1px 0 #d9a400;
+  text-shadow: 0 1px 0 #ffd040;
+  color: #403000;
+}
+section.signup aside #success-message {
+  background-color: #6b9031;
+}
+section.signup aside #success-message p {
+  text-shadow: 0 -1px 0 #4f6a24;
+  text-shadow: 0 1px 0 #87b63e;
+  color: #324417;
+}
+section.signup aside #failure-message, section.signup aside #incomplete-message, section.signup aside #invalid-email {
+  background-color: #9d261d;
+}
+section.signup aside #failure-message p, section.signup aside #incomplete-message p, section.signup aside #invalid-email p {
+  text-shadow: 0 -1px 0 #721c15;
+  text-shadow: 0 1px 0 #c83025;
+  color: #47110d;
+}
+/* Footer
+==========================================================*/
+footer {
+  display: inline;
+  float: left;
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 620px;
+  left: 160px;
+  background: transparent url("../img/bg_footer.png") top left no-repeat;
+  height: 60px;
+  position: relative;
+  top: -60px;
+}
+footer section.connections {
+  float: right;
+}
+footer section.connections ul {
+  margin: 17px 10px 0 0;
+}
+footer section.connections ul li {
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  text-indent: -119988em;
+  overflow: hidden;
+  text-align: left;
+  background-color: #6b9031;
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+footer section.connections ul li.facebook {
+  background: #6b9031 url("../img/icns_facebook.png") top left no-repeat;
+}
+footer section.connections ul li.twitter {
+  background: #6b9031 url("../img/icns_twitter.png") top left no-repeat;
+}
+footer section.connections ul li.linkedin {
+  background: #6b9031 url("../img/icns_linkedin.png") top left no-repeat;
+}
+footer section.connections ul li.flickr {
+  background: #6b9031 url("../img/icns_flickr.png") top left no-repeat;
+}
+footer section.connections ul li.tumblr {
+  background: #6b9031 url("../img/icns_tumblr.png") top left no-repeat;
+}
+footer section.connections ul li:hover {
+  background-color: #121212;
+  border-bottom: 1px solid #333;
+}
+footer section.connections ul li a {
+  display: block;
+  height: 30px;
+  width: 30px;
+  z-index: 3000;
+}
+/* IE Fixes
+================================================================*/
+.ie7 .signup input {
+  text-shadow: 0 1px 0 #ffffff;
+  background-color: transparent;
+  border: none;
+  color: #777777;
+  float: left;
+  font-size: 18px;
+  height: 47px;
+  margin: 0;
+  padding: 18px 0px;
+  line-height: 47px;
+  width: 370px;
+  display: none;
+}
+.ie7 .signup button {
+  width: 175px;
+}

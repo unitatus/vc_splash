@@ -1,0 +1,17 @@
+<%= form_for(@distribution_list) do |f| %>
+  <% if @distribution_list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@distribution_list.errors.count, "error") %> prohibited this distribution_list from being saved:</h2>
+
+      <ul>
+      <% @distribution_list.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
