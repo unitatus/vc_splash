@@ -1,6 +1,7 @@
 class MoveBoxOrderChargesToNewModel < ActiveRecord::Migration
   def self.up
-    boxes = Box.find_all_by_box_type(Box::VC_BOX_TYPE)
+# In reconstitution this is not necessary and in fact breaks things
+/*    boxes = Box.find_all_by_box_type(Box::VC_BOX_TYPE)
     boxes.each do |box|
       charge = Charge.find_by_product_id_and_order_id(box.ordering_order_line.product_id, box.ordering_order_line.order_id)
       if charge
@@ -24,6 +25,7 @@ class MoveBoxOrderChargesToNewModel < ActiveRecord::Migration
         end
       end
     end
+*/
   end
 
   def self.down
