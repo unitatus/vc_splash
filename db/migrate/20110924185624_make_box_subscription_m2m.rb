@@ -7,12 +7,13 @@ class MakeBoxSubscriptionM2m < ActiveRecord::Migration
     
     add_index :boxes_subscriptions, :box_id
     add_index :boxes_subscriptions, :subscription_id
-    
-    boxes_with_subscriptions = Box.all.select { |box| !box.subscription_id.nil? }
-    boxes_with_subscriptions.each do |box|
-      box.subscriptions << Subscription.find(box.subscription_id)
-      box.save
-    end
+   
+    # This interim state does not work with current object model - removed code while reconstituting site on June 21, 2013 
+    #boxes_with_subscriptions = Box.all.select { |box| !box.subscription_id.nil? }
+    #boxes_with_subscriptions.each do |box|
+    #  box.subscriptions << Subscription.find(box.subscription_id)
+    #  box.save
+    #end
     
     remove_column :boxes, :subscription_id
   end
