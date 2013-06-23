@@ -1,4 +1,4 @@
-:lass AddSubscriptionsToFurnitureItems < ActiveRecord::Migration
+class AddSubscriptionsToFurnitureItems < ActiveRecord::Migration
   def self.up
     create_table :furniture_items_subscriptions, :id => false do |t|
           t.integer :furniture_item_id, :references => :stored_items
