@@ -1,0 +1,102 @@
+<%= render "admin/admin_menu", :locals => { :admin_page => @admin_page }%>
+<div id="internal-right">
+	<h1>
+		Furniture for User #<%= @user.id %> (<%= @user.first_name %> <%= @user.last_name %>)
+	</h1><br>
+<table class="lightly_padded_table">
+	<tr>
+		<th>ID</th>
+		<th>Default Img</th>
+		<th>Cubic Feet</th>
+		<th>Location</th>
+		<th>Status</th>
+		<th>Subscription</th>
+		<th>Photos</th>
+		<th>Edit?</th>
+		<th>Return?</th>
+		<% if current_user.admin? %>
+			<th>Delete?</th>
+		<% end %>
+	</tr>
+	<% if @user.furniture_items.empty? %>
+		<tr><td colspan="10" style="text-align: center">no furniture items</td></tr>
+	<% else %>
+		<% @user.furniture_items.each do |item| %>
+			<tr>
+				<td style="text-align: center; vertical-align: middle">
+					<a href="/admin/furniture_items/<%=item.id%>"><%= item.id %></a>
+				</td>
+				<td style="text-align: center; vertical-align: middle">
+					<% item_photo = item.default_photo(StoredItemPhoto::ADMIN_VISIBILITY) %>
+					<% if item_photo.nil? %>
+						<% item_photo = item.default_photo(StoredItemPhoto::CUSTOMER_VISIBILITY) %>
+					<% end %>
+					<% if item_photo %>
+						<%= image_tag(item_photo.photo.url(:thumb), :name => "small_" + item_photo.id.to_s) %>
+					<% else %>
+						(no photos)
+					<% end %>
+				</td>
+				<td style="text-align: center; vertical-align: middle">
+					<%= item.cubic_feet.round(2) %>
+				</td>
+				<td style="text-align: center; vertical-align: middle">
+					<%= item.location %>
+				</td>
+				<td style="text-align: center; vertical-align: middle">
+					<%= item.status %><br>
+					<% if item.incomplete? %>
+						<a href="/admin/furniture_items/<%=item.id%>/publish" data-confirm="Are you sure? The user will be able to see the furniture item and all public photos. Only administrators can unpublish.">Publish?</a>
+					<% elsif current_user.admin? && !item.has_charges? && !item.returned? && !item.return_requested? %>
+						<a href="/admin/furniture_items/<%=item.id%>/unpublish" data-confirm="Are you sure? The item will disappear from the user's inventory.">Unpublish?</a>
+					<% elsif item.return_requested? %>
+						<a href="/admin/furniture_items/<%= item.id %>/cancel_retrieval_request">(cancel retrieval)</a>
+					<% end %>
+				</td>
+				<td style="text-align: center; vertical-align: middle">
+					<% if !item.subscriptions.empty? %>
+						<% item.subscriptions.each_with_index do |subscription, index| %>
+							<% if index > 1 %>
+								, 
+							<% end %>
+							<a href="/admin/user/<%=@user.id%>/subscriptions/<%= subscription.id%>"><%= subscription.id %></a>
+						<% end %>
+					<% else %>
+						NA
+					<% end %>
+				</td>
+				<td style="text-align: center; vertical-align: middle">
+					<a href="/admin/furniture_items/<%=item.id%>/photos">Photos</a>
+				</td>
+				<td style="text-align: center; vertical-align: middle">
+					<% if item.incomplete? %>
+						<a href="/admin/furniture_items/<%=item.id%>/edit">Edit</a>
+					<% else %>
+						NA
+					<% end %>
+				</td>
+				<td style="text-align: center; vertical-align: middle">
+					<% if item.in_storage? %>
+						<a href="/admin/furniture_items/<%= item.id %>/mark_returned" data-confirm="Are you sure? This cannot be undone without an administrator's assistance, and will stop all charges for this furniture.">Mark Returned</a>
+					<% else %>
+						NA
+					<% end %>
+				</td>
+				<% if current_user.admin? %>
+					<td style="text-align: center; vertical-align: middle">
+						<% if item.incomplete? %>
+							<a href="/admin/furniture_items/<%=item.id%>/destroy">Destroy</a>
+						<% else %>
+							NA
+						<% end %>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	<% end %>
+	<tr>
+		<td colspan="10" style="text-align: right"><a href="/admin/users/<%=@user.id%>/add_furniture_item">Add furniture item &gt;&gt;</a></td>
+	</tr>
+</table>
+</div>
+<div class="clearer"></div>

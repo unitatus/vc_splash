@@ -1,0 +1,61 @@
+
+            <div id="home-subheader">
+                <img src="images/subheader.gif" alt="Your stuff. Organized. Safeguarded. At your fingertips." />
+            </div>
+            <div id="viewer">
+                <div id="viewer-left">
+					<img src="images/homepage-1.gif" alt="" />
+                </div>
+                <div id="viewer-right">
+                    <div id="viewer-right-top">
+						
+                        <p>To celebrate our grand opening, we are offering free boxes and shipping supplies to new customers!<br>
+						<% if user_signed_in? %>
+							<a href="/account/store_more_boxes"><span class="learnmore">Store boxes now >></span></a>
+						<% end %>
+							</p>
+							
+                    </div>
+                    <div id="viewer-right-bottom">
+                        <img src="images/rightforme.gif" alt="Is this right for me?" />
+						<div  style="color: white; padding: 10px 10px 10px 10px ">
+Moving? Downsizing? Remodeling? Cleaning? <strong>The Visible Closet</strong> is a great solution for a wide variety of people.
+						<div style="text-align: right"><a href="/right_for_me" style="color: #cccccc">Learn More &gt;&gt;</a></div>
+						</div>
+                    </div>
+					<% if !user_signed_in? %>
+                    <a href="/users/register" class="calltoaction"><img src="images/calltoaction.png" alt="Sign Up Now" /></a>
+					<% end %>
+                </div>
+                <img src="images/upperleft.png" alt="" class="upperleftcorner" />
+                <img src="images/upperright.png" alt="" class="upperrightcorner" />
+                <img src="images/lowerleft.png" alt="" class="lowerleftcorner" />
+                <img src="images/lowerright.png" alt="" class="lowerrightcorner" />
+                <div class="clearer"></div>
+            </div>
+            <div id="home-extra">
+                <div id="home-extra-left"><p>Most storage solutions are like black holes. Once you put something in your attic, basement or storage
+                unit, how long before it becomes just another lost memory?</p><p>Check out the benefits you receive by storing with The Visible Closet:</p></div>
+                <div id="home-social">
+                    <a href="http://www.facebook.com/pages/The-Visible-Closet/178583068871975" class="facebook-icon" target="new"><img src="images/f_logo.jpg" alt="Facebook" height="31" width="31" /></a>
+                    <a href="http://twitter.com/visiblecloset" class="twitter-icon" target="new"><img src="images/twitter.gif" alt="" /></a>
+                    <p class="tell-a-friend">Tell a Friend!</p>
+                </div>
+                <div class="clearer"></div>
+            </div>
+            <div id="home-info" class="top-border">
+                <div class="box leftgap">
+                    <h2>Store</h2>
+                    <p>Storage lockers just don't make sense anymore. Why lug your stuff to a storage facility only to use half of an expensive locker? With The Visible Closet, you can ship and retrieve your boxes with the click of a button and pay only for the storage space that you need.</p>
+                </div>
+                <div class="box">
+                    <h2>Inventory</h2>
+                    <p>By choosing the optional inventory service, you put your items just a mouseclick away. We'll photograph your items so you can easily peruse your items, and  tag them so you can easily find what you're looking for.</p>
+                </div>
+                <div class="box">
+                    <h2>Manage</h2>
+                    <p>Once you have inventoried your items you can manage them individually or in groups. Mail an item to an address. Sell or donate items*. Safely dispose of items. All from the comfort of your home.</p>
+<p><br>*Coming soon!</p>
+                </div>
+                <div class="clearer"></div>
+            </div>

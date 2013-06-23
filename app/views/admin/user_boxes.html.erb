@@ -1,0 +1,77 @@
+<%= render "admin_menu", :locals => { :admin_page => @admin_page }%>
+<div id="internal-right" style="margin-left: -75px">
+	<h1>Boxes for User #<%= @user.id %> (<%= @user.first_name %> <%= @user.last_name %>)</h1><br>
+	<table class="prices_table">
+		<tr>
+			<% if params[:sort_by] == "id" && params[:desc].nil? %>
+				<% id_desc_string = "&desc=true" %>
+			<% end %>
+			<th><a href="<%= request.fullpath.split("?")[0] %>?sort_by=id<%= id_desc_string %>">#</a></th>
+			<% if params[:sort_by] == "created_at" && params[:desc].nil? %>
+				<% created_at_desc_string = "&desc=true" %>
+			<% end %>
+			<th><a href="<%= request.fullpath.split("?")[0] %>?sort_by=created_at<%= created_at_desc_string %>">Create Date</a></th>
+			<th>Orders</th>
+			<th>Inventory</th>
+			<% if params[:sort_by] == "status" && params[:desc].nil? %>
+				<% status_desc_string = "&desc=true" %>
+			<% end %>
+			<th><a href="<%= request.fullpath.split("?")[0] %>?sort_by=status<%= status_desc_string %>">Status</a></th>
+			<% if params[:sort_by] == "type" && params[:desc].nil? %>
+				<% type_desc_string = "&desc=true" %>
+			<% end %>
+			<th><a href="<%= request.fullpath.split("?")[0] %>?sort_by=box_type<%= type_desc_string %>">Type</a></th>
+			<th>Box Num</th>
+			<!--<th>Subscriptions</th>-->
+			<th>Cubic Feet</th>
+			<th>Receive</th>
+			<% if current_user.admin? %>
+				<th>Destroy?</th>
+			<% end %>
+		</tr>
+		<% @boxes.each do |box| %>
+			<tr>
+				<td><a href="/admin/user/<%= @user.id %>/boxes/<%= box.id %>"><%= box.id %></a></td>
+				<td><%= box.created_at.strftime('%m/%d/%Y %l:%M %p') %></td>
+				<td>
+					<% if box.ordering_order %>
+						<a href="/admin/user/<%= @user.id %>/orders/<%= box.ordering_order.id %>"><%= box.ordering_order.id %></a>(Ordering)
+					<% end %>
+					<% if box.inventorying_order %>
+						<br><a href="/admin/user/<%= @user.id %>/orders/<%= box.inventorying_order.id %>"><%= box.inventorying_order.id %></a>(Inventorying)
+					<% end %>
+					<% if box.servicing_order %>
+						<br><a href="/admin/user/<%= @user.id %>/orders/<%= box.servicing_order.id %>"><%= box.servicing_order.id %></a>(Servicing)
+					<% end %>
+				</td>
+				<td><%= pluralize box.stored_items.size, "item" %></td>
+				<td>
+					<%= box.status %>
+				</td>
+				<td><%= box.box_type %></td>
+				<td><%= box.box_num %></td>
+				<!--
+				<td>
+					<% if box.subscriptions.empty? %>
+						NA
+					<% else %>
+						<% box.subscriptions.each_with_index do |subscription, index| %>
+							<% if index > 0 %>
+								, 
+							<% end %>
+							<a href="/admin/user/<%= @user.id %>/subscriptions/<%= subscription.id %>"><%= subscription.id %></a>
+						<% end %>
+					<% end %>
+				</td>-->
+				<td><%= box.cubic_feet ? box.cubic_feet.round(2) : "NA" %></td>
+				<td>
+					<a href="/boxes/receive_box?box_id=<%= box.id %>">Receive</a>
+				</td>
+				<% if current_user.admin? %>
+					<td><a href="/admin/user/<%= @user.id %>/boxes/<%=box.id%>/destroy" data-confirm="This will delete all inventory, associated inventory orders, EVERYTHING for this box. Are you SURE?" data-method="delete" rel="nofollow">Clear Test Data</a></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+</div>
+<div class="clearer"></div>

@@ -1,0 +1,71 @@
+<% @menu_page = :cart %>
+<%= render 'account_nav', :locals => {:menu_page => @menu_page} %>
+<div id="internal-right">
+<p class="notice"><%= flash[:notice] %></p>
+<p class="alert"><%= flash[:alert] %></p>
+<%= render 'account_error_messages' %>
+<% if @cart.cart_items.empty? %>
+    You have no items in your cart.
+<% else %><br>
+<div class="graybox">
+    <table>
+        <thead>
+            <tr>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Update Quanitity</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody class="top-line bottom-line">
+			<% @cart.cart_items_for_checkout.each do |cart_item| %>
+		      <% product = Product.find(cart_item.product_id) %>
+			<%= form_tag "/account/update_cart_item", :class => "standard" do %>
+            <tr>
+                <td><%= cart_item.description %></td>
+                <td style="text-align: center">
+					<% if cart_item.new_box_line? %>
+	                	<div class="incrementer" style="margin-left: auto; margin-right: auto">
+		                    <span>&nbsp;</span>
+							<%= text_field_tag(:quantity, cart_item.quantity, :size => 5, :align => "middle") %>
+		                    <div class="increment-up"></div>
+		                    <div class="increment-down"></div>
+		                </div>
+					<% elsif cart_item.product.stocking_fee? || cart_item.product.stocking_fee_waiver? %>
+						<%= cart_item.quantity %>
+					<% else %>
+						NA
+					<% end %>
+                </td>
+                <td>
+				<% if cart_item.new_box_line? %>
+					<%= hidden_field_tag(:cart_item_id, cart_item.id) %>
+					<%= submit_tag("Update", :class => 'button', :name => 'commit') %>
+				<% else %>
+					NA
+				<% end %>
+				</td>
+                <td>
+					<% if cart_item.deletable? %>
+						<a href="/account/remove_cart_item?cart_item_id=<%= cart_item.id %>">Remove</a>
+					<% end %>
+				</td>
+            </tr>
+				<% end # form tag %>
+			<% end # cart item loop %>
+        </tbody>
+        <tfoot>
+            <tr>
+				<td colspan="2"></td>
+                <td colspan="2" class="checkout">
+	<% if !@cart.cart_items.empty? %>
+                    <a href="/account/check_out"><img src="/images/checkout.gif" alt="Checkout" /></a>
+	<% end %>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<% end %>
+</div>
+<div class="clearer"></div>

@@ -1,0 +1,67 @@
+<% @menu_page = :account %>
+<%= render 'account/account_nav', :locals => { :menu_page => @menu_page } %>
+<div id="internal-right">
+	<div class="simple_header">Your Addresses On File</div><br>
+	<% if not @messages.nil? and @messages.size > 0 %>
+		<% @messages.each do |message| %>
+		<div class="error_label"><%= message %></div>
+		<% end %>
+	<% end %>
+<% if !@addresses || @addresses.size == 0 %>
+You do not have any addresses on file. Click <a href="/addresses/new">here</a> to add a new address.
+<% else %>
+<div class="graybox">
+	<table>
+		<tbody class="top-line bottom-line">
+<% @addresses.each_with_index do |address, index| %>
+	<% if index % 3 == 0 %>
+	<tr>
+	<% end %>
+	<td>
+	<%= address.first_name %> <%= address.last_name %> 
+	<br><%= address.address_line_1 %>
+	<% if !address.address_line_2.blank? %>
+		<br><%= address.address_line_2 %>
+	<% end %>
+	<br><%= address.city %>, <%= address.state %>
+	<br><%= address.zip %>
+	<br>Day Phone: <%= number_to_phone(address.day_phone) %>
+	<% if !address.evening_phone.blank? %>
+	<br>Evening Phone: <%= number_to_phone(address.evening_phone) %>
+	<% end %>
+	<br>
+	<% if address.fedex_validation_status != Address::VALID %>
+		<b>UNVALIDATED FOR SHIPPING</b>
+	<% else %>
+		<i>Validated for shipping</i>
+	<% end %>
+	<br><%= link_to 'Edit', edit_address_path(address) %> 
+	<% if current_user.default_shipping_address != address && !address.has_active_payment_profiles? %>
+	| <%= link_to 'Delete', address, :confirm => 'Are you sure?', :method => :delete %> <br>
+	<% elsif address.has_active_payment_profiles? %>
+	| (Can't delete billing address)<br>
+	<% else %>
+	<br>
+	<% end %>
+	<% if address.fedex_validation_status != Address::VALID %>
+		<a href="/addresses/<%= address.id %>/confirm_address">Validate address for shipping</a><br>
+	<% end %>
+	<% if current_user.default_shipping_address == address %>
+		<b>This is your default shipping address</b>
+	<% else %>
+		<a href="/addresses/<%=address.id%>/set_default_shipping">Make Default Shipping Address</a>
+	<% end %>
+	</td>
+	<% if (index + 1) % 3 == 0 || index == @addresses.size - 1 %>
+		</tr>
+	<% end %>
+<% end %>
+</tbody></table>
+<br><div style="text-align: right">
+	<%= link_to 'Create New Address >>', new_address_path() %><br>
+	<%= link_to 'Manage Payment Methods >>', payment_profiles_path() %>
+	</div>
+<% end %> <!-- nil check -->
+</div>
+</div>
+<div class="clearer"></div>

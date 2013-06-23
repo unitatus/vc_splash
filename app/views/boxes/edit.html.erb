@@ -1,0 +1,7 @@
+<% @menu_page = :box %>
+<%= render 'account/account_nav', :locals => { :menu_page => @menu_page } %>
+<div id="internal-right">
+<div class="simple_header">Editing box <%= @box.id %></div>
+<%= render 'form' %>
+</div>
+<div class="clearer"></div>

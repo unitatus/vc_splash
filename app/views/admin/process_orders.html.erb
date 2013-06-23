@@ -1,0 +1,53 @@
+
+<%= render "admin_menu", :locals => { :admin_page => @admin_page }%>
+<div id="internal-right">
+<h1>Orders to Process</h1>
+<% if @orders.size > 0 %>
+	<table class="prices_table">
+	  <tr>
+		<th>Order ID</th>
+	    <th>User First Name</th>
+	    <th>User Last Name</th>
+	    <th>User Email</th>
+	    <th>Order Created</th>
+		<th>Order Status</th>
+		<th>Process Order</th>
+	  </tr>
+		<% @orders.each do |order| %>
+
+		<% user = order.user %>
+	  <tr<%= user.test_user? ? " style='background: #FF99FF'" : "" %>>
+		<td>
+			<%= order.id %>
+		</td>
+	    <td>
+	      <%= user.first_name %>
+	    </td>
+	    <td>
+	      <%= user.last_name %>
+	    </td>
+	    <td>
+	      <a href="mailto:<%= user.email %>"><%= user.email %></a>
+	    </td>
+		<td>
+			<%= order.created_at.strftime '%m/%d/%Y %l:%M %p' %>
+		</td>
+		<td>
+			<%= order.status %><%= user.test_user? ? " (TEST USER)" : "" %>
+		</td>
+	    <td>
+	      <a href="/orders/<%= order.id %>/process">Process Order</a>
+	    </td>
+	  </tr>
+		<% end %>
+	</table>
+<% else %>
+<br><br>There are no orders to process.
+<% end %>
+<% if !@shipments.nil? %>
+	<br><br>
+	<h1>Outstanding Shipments</h1>
+	<%= render :partial => "shipments", :locals => { :delete_pre_url => "/admin/shipment/" } %>
+<% end %>
+</div>
+<div class="clearer"></div>

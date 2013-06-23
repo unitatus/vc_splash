@@ -1,0 +1,88 @@
+<% @menu_page = :account %>
+<%= render 'account/account_nav', :locals => { :menu_page => @menu_page } %>
+<div class="simple_header">Your Coupons and Discounts</div>
+<% user_box_count = @user.box_count %>
+<div id="internal-right">
+	<% if @user.errors.any? %>
+	<div class="error_label">
+		Could not add offer because of the following issues:<br><br>
+		<ul>
+			<% @user.errors.each do |key, msg| %>
+			<li><%= raw msg %></li>
+			<% end %>
+		</ul>
+		<br>
+	</div>
+	<% end %>
+	<% if @user.user_offers.empty? %>
+		None
+	<% else %>
+	<% if user_box_count == 0 %>
+	You must order boxes before you can apply coupons to boxes. <a href="/account/store_more_boxes">Click here to get started!</a><br><br>
+	<% end %>
+	<table class="prices_table">
+		<tr>
+			<th>Code</th>
+			<th>Expiration Date</th>
+			<th>Description</th>
+			<th>Benefit Used</th>
+			<th>Benefit remaining</th>
+			<% if user_box_count > 0 %>
+				<th style="width: 50px">Boxes</th>
+			<% end %>
+		</tr>
+		<% @user.active_offers.each do |user_offer| %>
+			<tr>
+				<td>
+					<%= user_offer.unique_identifier %>
+				</td>
+				<td>
+					<%= user_offer.expiration_date.strftime "%m/%d/%Y" %>
+				</td>
+				<td>
+					<%= user_offer.benefits_description %>
+				</td>
+				<td>
+					<% user_offer.benefit_used_messages.each_with_index do |msg, index| %>
+						<% if index > 0 %>
+						, 
+						<% end %>
+						<%= msg %>
+					<% end %>
+				</td>
+				<td>
+					<% user_offer.benefit_remaining_messages.each_with_index do |msg, index| %>
+						<% if index > 0 %>
+						, 
+						<% end %>
+						<%= msg %>
+					<% end %>
+				</td>
+				<% if user_box_count > 0 %>
+					<td>
+					<% if user_offer.applies_to_boxes? %>
+						<% if user_offer.applied_to_boxes? && user_offer.can_modify_boxes? %>
+							<a href="/user_<%= user_offer.is_a?(UserOffer) ? "offer" : "coupon" %>s/<%= user_offer.id %>/apply_boxes">Edit</a>
+						<% elsif user_offer.can_modify_boxes? %>
+							<a href="/user_<%= user_offer.is_a?(UserOffer) ? "offer" : "coupon" %>s/<%= user_offer.id %>/apply_boxes">Apply to boxes</a>
+						<% else %>
+							Cannot edit
+						<% end %>
+					<% else %>
+						NA
+					<% end %>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+	<% end %>
+	<br>
+	<div style="text-align: right">
+	<%= form_tag "/apply_offer_code", :class => :standard, :onsubmit => "coupon_apply_submit.disabled=true;" do %>
+		<%= text_field_tag :offer_code, params[:offer_code], :placeholder => "Enter coupon or offer code here", :class => "textbox", :style => "width: 200px;" %>
+		<%= submit_tag "Apply Offer Code", :class => "button", :id => "coupon_apply_submit" %>
+	<% end %>
+	</div>
+</div>
+<div class="clearer"></div>

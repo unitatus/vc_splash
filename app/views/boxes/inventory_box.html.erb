@@ -1,0 +1,29 @@
+
+<% content_for :head do %>
+	<%= stylesheet_link_tag "/css/application.css" %>
+	<%= javascript_include_tag "/javascripts/plupload/plupload.full.min.js" %>
+	<%= javascript_include_tag "/javascripts/plupload/jquery.plupload.queue.min.js" %>
+
+	<%= javascript_tag do %>
+		<%= render "plupload.js" %>
+	<% end %>
+<% end %>
+
+<a href="/admin/home">&lt;&lt; Return to admin home</a> | 
+<a href="/boxes/clear_box?box_id=<%= @box.id %>" onclick = "if (! confirm('Are you sure?')) return false;">Reset box contents</a> | 
+<a href="/boxes/add_tags?box_id=<%= @box.id %>">Add tags &gt;&gt;</a><br><br>
+  <div id='flash'></div> 
+  <div id='photos_container' style="width:50%"> 
+
+   <% @box.stored_items.each do |stored_item| %>
+<% @stored_item = stored_item %> <!-- need to do this to pass value to partial, unfortunately -->
+<%= render("photo", :locals => {:stored_item => @stored_item}) %>
+<% @stored_item = nil %>
+	<% end %>
+</div> <!-- photos_container -->
+<div>
+  <div id='uploader'> 
+    <p>Your browser doesn't have HTML5, Flash or Silverlight support.</p> 
+  </div>
+</div> 
+<div class="clearer"></div>

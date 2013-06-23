@@ -1,0 +1,134 @@
+<% @menu_page = :account %>
+<%= render 'account_nav', :locals => { :menu_page => @menu_page } %>
+<div id="internal-right">
+	<% if current_user.order_count == 1 %>
+	<div style="text-align: center; margin: 0 0 0 0; padding: 0 0 0 0">
+		<img src="/images/breadcrumb6.jpg"><br><br>
+	</div>
+	<% end %>
+<div class="simple_header">Order Complete!</div><br>
+<hr>
+	<table class="check_out_cart_summary">
+		<tr>
+			<th>
+				Item
+			</th>
+			<th>
+				Quantity
+			</th>
+			<th>
+				Cost
+			</th>
+			<th>
+				Plan
+			</th>
+			<th>
+				Due now
+			</th>
+		</tr><% @order.order_lines.each do |order_line| %>
+			<% product = Product.find(order_line.product_id) %>
+		<tr>
+			<td align="left">
+				<%= order_line.product.name %>
+				<% if order_line.vc_box? %>
+					<br> <a href="#checkout_inventorying_vcbox_inline" id="co_inv_link">(what about inventorying?)<a/>
+				<% elsif order_line.cust_box? %>
+					<br> <a href="#checkout_inventorying_custbox_inline" id="co_inv_link">(what about inventorying?)<a/>
+				<% elsif order_line.item_service? %>
+					<br>
+					<%= image_tag(order_line.service_item.photo.url(:thumb), :name => "thumb_" + order_line.service_item.id.to_s, :height => 100, :width => 100) %>
+				<% end %>
+			</td>
+			<td>
+				<%= order_line.quantity %>
+			</td>
+			<td>
+				<%= number_to_currency(order_line.total_in_cents/100) %> <%= product.price_comment %>
+				<% if order_line.new_box_line? %>
+				<% #<br><a id="pricing_explainer_link" href="#pricing_explainer">(pricing explanation)</a> %>
+				<% end %>
+			</td>
+			<td>
+				<% if order_line.box_order_line? %>
+					<% if order_line.committed_months >= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_3 %>
+						<%= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_3 %>-month plan
+					<% elsif order_line.committed_months >= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_2 %>
+						<%= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_2 %>-month plan
+					<% elsif order_line.committed_months >= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_1 %>
+						<%= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_1 %>-month plan
+					<% else %>
+						Monthly
+					<% end %>	
+				<% else %>
+					NA
+				<% end %>
+		</td>
+			<td align="right">
+				<%= number_to_currency(order_line.discount.charged_at_purchase + order_line.discount.prepaid_at_purchase) %>
+			</td>
+		</tr><% end %> <!-- end loop -->
+	</table>
+	<br>
+	<hr>
+	<div style="text-align:right; position:relative; padding: 0 20px 10px 0;">
+	Shipping Charged: 
+	<% if @order.contains_ship_charge_items && !@order.quoted_shipping_cost_success %>
+		TBD
+	<% else %>
+		<%= number_to_currency @order.initial_charged_shipping_cost %>
+	<% end %>
+	<br><br>
+	
+	<b>Total Charged: <%= number_to_currency(@order.total_in_cents.to_f/100) %></b>
+</div>
+<div style="text-align:right; position:relative; padding: 0 20px 10px 0;">
+<a href="/orders/<%=@order.id%>/print_invoice" target="new">Printable Summary &gt;&gt;</a>
+</div>
+<% if @order.contains_box_orders? %>
+	<br><br>Thank you for placing your order! 
+	To keep track of your boxes, see the <a href="/boxes">Browse Boxes</a> menu on the left. 
+	<br><br>To learn more about how to pack boxes, <a href="/packing_tips">click here</a>. 
+	<br><br>You can choose to have your boxes inventoried by marking the indicator on the box (Visible Closet boxes) or the shipping label (your boxes). You can also choose the inventory option once your boxes are in storage by navigating to the <a href="/boxes">Browse Boxes</a> menu.<br><br>
+	<% if @order.vc_box_count > 0 %>
+	<div class="simple_header">Visible Closet <%= @order.vc_box_count > 1 ? 'Boxes' : 'Box' %></div>
+	<br><br>Your free <%= @order.vc_box_count %> Visible Closet <%= @order.vc_box_count > 1 ? 'boxes' : 'box' %> <%= @order.vc_box_count > 1 ? 'are' : 'is' %> on <%= @order.vc_box_count > 1 ? 'their' : 'its' %> way! Visible Closet boxes are generally shipped to you within one business day, and come pre-addressed -- when you are ready to ship, all you have to do is schedule a pick-up with Fedex by calling 1-800-GO-FEDEX. 
+	<br><br>Your <%= @order.vc_box_count > 1 ? 'boxes' : 'box' %> will come with free shipping supplies! 
+
+	<% end %>
+	<% if @order.cust_box_count > 0 %>
+	<br>
+	<div class="simple_header">Your <%= @order.cust_box_count > 1 ? 'Boxes' : 'Box' %></div>
+	<br>You have chosen to store <%= @order.cust_box_count %> <%= @order.cust_box_count > 1 ? 'boxes' : 'box' %> of your own. Click below to download FedEx labels to affix to your boxes (you can also access these labels via the "Browse Boxes" link at the left). When you are ready, call 1-800-GO-FEDEX to have Fedex pick up your <%= @order.cust_box_count > 1 ? 'boxes' : 'box' %>. <br><br>
+	<ul>
+		<% @order.customer_boxes.each do |cust_box| %>
+			<li><a href="/box/<%=cust_box.id %>/get_label">Box <%= cust_box.box_num %> Label</a></li>
+		<% end %>
+	</ul>
+	<% end %>
+	<br><br>
+<% end # end check for ordered boxes %>
+</div>
+<div class="clearer"></div>
+<!-- Google Code for New Box Ordered Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1033216609;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "WB6iCNGB1wIQ4cTW7AM";
+var google_conversion_value = 0;
+if (20) {
+  google_conversion_value = 20;
+}
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1033216609/?value=20&amp;label=WB6iCNGB1wIQ4cTW7AM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<%= render :partial => "checkout_explanations" %>
+<%= render :partial => "pricing_explainer", :locals => { :order_id => @order.id } %>

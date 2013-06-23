@@ -1,4 +1,4 @@
-VcSplash::Application.configure do
+VisibleCloset::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -12,15 +12,35 @@ VcSplash::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_view.debug_rjs             = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
 
-  # Don't care if the mailer can't send
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  # Customizations for The Visible Closet
+  config.our_box_product_id = 8
+  config.our_box_product_id_gf = 1
+  config.your_box_product_id = 9
+  config.your_box_product_id_gf = 2
+  config.our_box_inventorying_product_id = 10
+  config.our_box_inventorying_product_id_gf = 3
+  config.your_box_inventorying_product_id = 11
+  config.your_box_inventorying_product_id_gf = 4
+  config.return_box_product_id = 5
+  config.item_donation_product_id = 6
+  config.item_mailing_product_id = 7
+  config.stocking_fee_product_id = 12
+  config.stocking_fee_waiver_product_id = 18
+  config.furniture_storage_product_id = 19
+  # if more products are added, be sure to update the constants and functions in the Product object
+
+  config.fedex_vc_address_id = 7
+  
+  config.furniture_stock_photo_id = 301
 end
 

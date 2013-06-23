@@ -1,0 +1,21 @@
+<div class="slim-centered" >
+	<h1>Pricing</h1><br>
+	With The Visible Closet, you get the luxury of seeing exactly what you have in storage at any time, accessing your items at any time and treating them the same way you would if they were in your home closet. <br><br>You get all this for a flat fee of <b><%= number_to_currency @cust_box.price %> per cubic foot, per month</b>. Shipping to us, boxes, and packing supplies are included in this price. All of our free boxes are 2 cubic feet. <br><br>We charge a one-time stocking fee of <b><%= number_to_currency @stocking_product.price %> per box</b>, regardless of size, to receive and store your box. You may also choose to have your moving company deliver boxes or other items to us at no additional charge; simply <a href="mailto:contact@thevisiblecloset.com">contact us</a> if you wish to do so. In the Chicago area you can take advantage of the services of our partner, <a href="http://www.move-tastic.com/" target="new">Move-tastic</a>, to help you pack and delivery your items to us at The Visible Closet.<br><br>
+	Additional services may incur a modest fee. See below for details.<br><br>
+	<table class="prices_table">
+		<tr>
+			<td>Send box to any address</td>
+			<td><%= number_to_currency @return_box_product.price %> + shipping</td>
+		</tr>
+		<tr>
+			<td>Send item to any address</td>
+			<td><%= number_to_currency @return_item_product.price %> + shipping</td>
+		</tr>
+		<tr>
+			<td>Donate item to charity</td>
+			<td><%= number_to_currency @donate_item_product.price %></td>
+		</tr>
+	</table>
+</div>
+<div style="display: none">
+</div>

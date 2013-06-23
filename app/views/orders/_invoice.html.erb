@@ -1,0 +1,148 @@
+<style>
+.left_column {
+	width: 30%; 
+	float: left; 
+	text-align: left; 
+	padding-left: 130px
+}
+.right_column {
+	width: 30%; 
+	float: right; 
+	text-align: left; 
+	padding-right: 50px
+}
+.left_wide_column {
+	float:left; 
+	width: 550px; 
+	text-align: right;
+}
+.right_narrow_column {
+	float:right; 
+	width: 120px; 
+	text-align: right;
+}
+.matrix_table td {
+	text-align: center;
+	padding-top: 5px;
+}
+</style>
+		<!-- SIDE MENU HTML --> 
+		<body>
+			<div style="text-align: center">
+<div style="text-align: center; margin: auto; width: 750px">
+	<div style="width: auto; padding: 10px; ">
+<!--  this should be https if the site goes back live -->
+		<a href="/"><img src="http://www.thevisiblecloset.com/images/vcLogo_beta.gif" alt="Visible Closet" /></a><br><br>
+		<strong>The Visible Closet</strong><br>
+		<%= raw address_summary(@vc_address, false) %>
+		<br><br><br>
+		<% if @invoice.nil? %>
+			Invoice not found
+		<% else %>
+				<% if @order %>
+				<strong>Order #: <%= @order.id %></strong><br>
+				<% end %>
+				<strong>Invoice #: <%= @invoice.id %></strong><br>
+				<strong>Invoice Date: <%= @invoice.created_at.strftime("%m/%d/%Y") %></strong></br>
+			<br><br>
+			<div style="text-align: left">
+			<strong>Customer Name: </strong><%= @invoice.user.first_name %> <%= @invoice.user.last_name %>
+			<br><br>
+			<strong>Billing Address</strong><br>
+			<%= raw address_summary(@billing_address) %>
+			<br><hr>
+			</div>
+			<div style="clear: both"></div>
+			<div style="width: 100%">
+				<br>
+				<table width=100% class="matrix_table">
+					<thead>
+						<tr>
+							<th align="left">Item</th>
+							<th>Ship To</th>
+							<th style="text-align: center">Qty</th>
+							<th>&nbsp;</th>
+							<th style="text-align: center">Cost</th>
+							<th>&nbsp;</th>
+							<th style="text-align: center"># Months Paid</th>
+							<th align="right">Price</th>
+						</tr>	
+					</thead>
+					<tbody>
+						<% @invoice.invoice_lines.each do |line| %>
+							<tr>
+								<td style="text-align: left"><%= line.description %></td>
+								<td style="text-align: center">
+									<% if line.shippable? %>
+										<%= raw address_summary line.shipping_address %>
+									<% else %>
+										NA
+									<% end %>
+								</td>
+								<td style="text-align: center"><%= line.quantity %></td>
+								<td>x</td>
+								<td  style="text-align: center"><%= number_to_currency line.unit_price %> <%= line.product.price_comment %></td>
+								<td>x</td>
+								<td style="text-align: center">
+								<% if line.box_order_line %>
+									<%= line.months_paid %>
+								<% else %>
+									NA
+								<% end %>
+								</td>
+								<td style="text-align: right">=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= number_to_currency(line.discount.charged_at_purchase + line.discount.prepaid_at_purchase) %>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>	
+			</div>
+			<div style="clear: both"></div>
+			<br><hr><br>
+			<div style="text-align: right">
+				Subtotal: <%= number_to_currency(@invoice.subtotal_in_cents / 100)%><br>
+				<% if @invoice.contains_ordered_boxes %>
+					New Box Shipping Cost: 
+					<% if @invoice.contains_only_ordered_boxes && @invoice.free_shipping? %>
+						$0.00
+					<% else %>
+						TBD (calculated when you ship a full box)
+					<% end %>
+					<br>
+				<% end %>
+
+				<% if !@invoice.contains_only_ordered_boxes %>
+					<% if @invoice.contains_ship_charge_items? && !@invoice.quoted_shipping_cost_success %>
+						Box return shipping charges: TBD on shipment date
+					<% elsif @invoice.contains_ship_charge_items? %>
+						Box return shipping charges: <%= number_to_currency @invoice.shipping_cost %>
+					<% end %>
+
+					<% if @invoice.contains_item_mailings? %>
+						<br>Item Shipping Charges: TBD (will be emailed)
+					<% end %>
+				<% end %>
+			</div>
+			<hr>
+			<div style="text-align: right">
+				Total Charged: 
+				<%= number_to_currency(@invoice.total_in_cents / 100) %>
+			</div>
+			<div style="clear: both"></div>
+			<div style="float: left; width: 20%; text-align: left">
+				<br>
+				<strong>Credit Card Details</strong><br>
+				Card Type:<br>
+				Card Number:<br>
+				Expiration:
+			</div>
+			<div style="float: right; width: 79%; text-align: left">
+				<br><br><%= @payment_profile.cc_type.capitalize %><br>
+				************<%= @payment_profile.last_four_digits %><br>
+				<%= @payment_profile.month%>/<%= @payment_profile.year %>
+			</div>
+			<div style="clear: both"></div>
+		<% end %>
+ 	</div>
+</div>
+</div>
+</body>

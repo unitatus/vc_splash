@@ -1,0 +1,2 @@
+<% confirm_message = "Please confirm that you want us to open and inventory your box." %>
+<%= link_to "create inventory", "/boxes/#{box.id}/request_inventory", :remote => true, :confirm => confirm_message %>

@@ -1,0 +1,32 @@
+<% @menu_page = :account %>
+<%= render 'account/account_nav', :locals => { :menu_page => @menu_page } %>
+<div id="internal-right">
+		<div class="simple_header">Select a new <%= @action %> address</div><br>
+	<% first = true %>
+	<% @addresses.each do |address| %>
+	    <% if !first %>
+<br>
+<hr>
+	    <% end %>
+		<%= form_tag "/account/choose_new_#{@action}_address", :class => "standard" do %>
+		<%= hidden_field_tag :address_id, address.id.to_s %>
+
+		<%= address.first_name %> <%= address.last_name %> 
+		<br><%= address.address_line_1 %>
+		<% if !address.address_line_2.blank? %>
+			<br><%= address.address_line_2 %>
+		<% end %>
+		<br><%= address.city %>, <%= address.state %>
+		<br><%= address.zip %>
+		<br>Day Phone: <%= number_to_phone(address.day_phone) %>
+		<% if !address.evening_phone.blank? %>
+		<br>Evening Phone: <%= number_to_phone(address.evening_phone) %>
+		<% end %>
+		<br><br>
+		<%= submit_tag("Select Address", :class => "button") %>
+
+		<% first = false %>
+		<% end %> <!-- form -->
+	<% end %> <!-- loop -->
+</div>
+<div class="clearer"></div>

@@ -1,0 +1,70 @@
+<%= render "admin_menu", :locals => { :admin_page => @admin_page }%>
+<div id="internal-right">
+	<h1>Shipment #<%= @shipment.id %></h1><br>
+<table class="lightly_padded_table">
+	<tr>
+		<td><b>Customer Name: </b></td><td><a href="/admin/user/<%= @shipment.user.id %>"><%= @shipment.user.first_name %> <%= @shipment.user.last_name %></a></td>
+	</tr>
+	<tr>
+		<td><b>From Address: </b></td><td><%= raw address_summary @shipment.from_address %></td>
+	</tr>
+	<tr>
+		<td><b>To Address: </b></td><td><%= raw address_summary @shipment.to_address %></td>
+	</tr>
+	<tr>
+		<td><b>Created At: </b></td><td><%= @shipment.created_at.strftime('%m/%d/%Y %l:%M %p') %></td>
+	</tr>
+	<tr>
+		<td><b>State: </b></td><td><%= @shipment.state %></td>
+	</tr>
+	<tr>
+		<td><b>Order Id: </b></td>
+		<td>
+			<% if @shipment.order_line %>
+				<a href="/admin/user/<%= @shipment.user.id %>/orders/<%= @shipment.order_line.order_id %>"><%= @shipment.order_line.order_id %></a>
+			<% else %>
+				None
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td><b>Box Id: </b></td>
+		<td>
+			<% if @shipment.box_id %>
+				<a href="/admin/user/<%= @shipment.user.id %>/boxes/<%= @shipment.box_id %>"><%= @shipment.box_id %></a>
+			<% else %>
+				None
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td><b>FedEx Tracking:</b></td>
+		<td>
+			<% if @shipment.tracking_number %>
+				<%= raw tracking_url @shipment.tracking_number, @shipment.tracking_number %>
+			<% else %>
+				No tracking number
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td><b>Customer Charge:</b></td>
+		<td>
+			<% if !@shipment.charge.nil? %>
+				<%= number_to_currency @shipment.charge.total_in_cents/100.0 %>
+			<% elsif @shipment.payor == Shipment::TVC %>
+				Not Applicable - TVC pays
+			<% else %>
+				<%= form_tag "/admin/shipment/#{@shipment.id}/set_charge" do %>
+					<%= text_field_tag :amount %>
+					<%= submit_tag "Submit", :confirm => "This will charge the customer for the shipment. Are you sure?" %>
+					<% if @error_message %>
+						<div class="error_label"><%= @error_message %></div>
+					<% end %>
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+</table>
+</div>
+<div class="clearer"></div>

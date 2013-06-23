@@ -1,4 +1,4 @@
-VcSplash::Application.configure do
+VisibleCloset::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -46,4 +46,36 @@ VcSplash::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  # Customizations for The Visible Closet
+  config.our_box_product_id = 10
+  config.our_box_product_id_gf = 1
+  config.your_box_product_id = 11
+  config.your_box_product_id_gf = 3
+  config.our_box_inventorying_product_id = 12
+  config.our_box_inventorying_product_id_gf = 5
+  config.your_box_inventorying_product_id = 13
+  config.your_box_inventorying_product_id_gf = 6
+  config.return_box_product_id = 7
+  config.item_donation_product_id = 8
+  config.item_mailing_product_id = 9
+  config.stocking_fee_product_id = 14
+  config.stocking_fee_waiver_product_id = 15
+  config.furniture_storage_product_id = 16
+
+  config.fedex_vc_address_id = 6
+  
+  config.furniture_stock_photo_id = 80
+
+  config.after_initialize do    
+    ::CIM_GATEWAY = ActiveMerchant::Billing::AuthorizeNetCimGateway.new(
+      :login => "5Fe5e8GF6z7H", # "API Login ID"
+      :password => "83zM4HAnrm84D4pB" # "Transaction Key"
+    )
+    
+    ::PURCHASE_GATEWAY = ActiveMerchant::Billing::Base.gateway(:authorize_net).new(
+      :login => "5Fe5e8GF6z7H", # "API Login ID"
+      :password => "83zM4HAnrm84D4pB" # "Transaction Key"
+    )
+  end
 end

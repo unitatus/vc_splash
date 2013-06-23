@@ -1,0 +1,171 @@
+<script language=javascript>
+function openMemberAgreement() {
+                window.radopen("membership_agrement", "Agreement");
+            }
+</script>
+	<% if current_user.order_count == 0 %>
+		<div style="margin-left: auto; margin-right: auto"><img src="/images/breadcrumb5.jpg"></div><br><br>
+	<% end %>
+	<h1>Confirm Order</h1>
+	<% @order.errors.each do |attr, message| %>
+	  <div class="error_label"><b>Notice:</b><%= message %></div><br>
+	<% end %>
+	<% if flash[:notice] %>
+		<% if flash[:notice].size == 1 %>
+		<div class="error_label"><b>Notice:</b> <%= flash[:notice].first %></div><br>
+		<% elsif flash[:notice].respond_to?(:each) %>
+			<b>Notice</b>: Could not apply due to the following issues:
+			<ul>
+				<% flash[:notice].each do |notice| %>
+					<li><%= notice %></li>
+				<% end %>
+			</ul>
+		<% end %>
+	<% end %>
+	
+<div id="upper" style="padding-left: 20px">
+		<br>
+		<div class="simple_header" style="padding: 0 0 0 0">
+			Default Payment Method
+		</div><br>
+		<% profile = current_user.default_payment_profile %>
+		<b><%= profile.cc_type.capitalize %></b> ending in <%= profile.last_four_digits %><br>
+		Name on card: <%= profile.first_name %> <%= profile.last_name %><br>
+		Expires on: <%= profile.month %>/<%= profile.year %><br><br>
+		<a href="/payment_profiles">Manage your cards</a> | <a href="/payment_profiles/new?source_c=account&source_a=check_out">Enter new default card</a>
+		<br><br>
+		<div class="simple_header" style="padding: 0 0 0 0">
+			Details
+		</div>
+</div>
+<br><br>
+
+<table class="check_out_cart_summary">
+	<tr>
+		<th>
+			Service
+		</th>
+		<th>
+			Quantity
+		</th>
+		<th>
+			Cost 
+		</th>
+		<th>
+			Notes
+		</th>
+		<th>
+			Due Now
+		</th>
+		<th>Shipping Address</th>
+		<th>Remove?</th>
+	</tr><% @cart.cart_items_for_checkout.each do |cart_item| %>
+	<tr>
+		<td align="left">
+			<%= cart_item.description %>
+			<% if cart_item.product.vc_box? %>
+				<br> <a href="#checkout_inventorying_vcbox_inline" id="co_inv_link">(what about inventorying?)<a/>
+			<% elsif cart_item.product.cust_box? %>
+				<br> <a href="#checkout_inventorying_custbox_inline" id="co_inv_link">(what about inventorying?)<a/>
+			<% elsif cart_item.item_service? %>
+				<br>
+				<%= image_tag(cart_item.stored_item.photo.url(:thumb), :name => "thumb_" + cart_item.stored_item.id.to_s, :height => 100, :width => 100) %>
+			<% end %>
+		</td>
+		<td>
+			<%= cart_item.quantity %>
+		</td>
+		<td>
+				<%= number_to_currency(cart_item.total_unit_price_after_discount) %> 
+				
+					<% if cart_item.new_box_line? %>
+					<% # <br><a id="pricing_explainer_link" href="#pricing_explainer">(pricing explanation)</a> %>
+					<% # removed when pricing was changed to remove discounts %>
+					<% end %>	
+		</td>
+		<td style="max-width: 150px">
+			<% if cart_item.donation? %>
+				You will be able to choose your charity after completing your order. For more details, please email us at <a href="mailto:contact@thevisiblecloset.com">contact@thevisiblecloset.com</a>.
+			<% elsif cart_item.item_mailing? %>
+				Shipping costs for item mailing will be emailed to you after submitting your order. You will have an opportunity to cancel your order before committing to pay for shipping costs if you wish.
+			<% elsif cart_item.committed_months.nil? %>
+				NA
+			<% else %>
+				<% if cart_item.committed_months >= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_3 %>
+					<%= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_3 %>-month plan
+				<% elsif cart_item.committed_months >= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_2 %>
+					<%= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_2 %>-month plan
+				<% elsif cart_item.committed_months >= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_1 %>
+					<%= Discount::MONTH_COUNT_DISCOUNT_THRESHOLD_1 %>-month plan
+				<% elsif cart_item.product.box? %>
+					Monthly
+				<% end %>
+			<% end %>
+		</td>
+		<td align="right">
+			<%= number_to_currency(cart_item.discount.charged_at_purchase + cart_item.discount.prepaid_at_purchase) %>
+			<br>
+			<% if cart_item.product.id == Rails.application.config.your_box_product_id %>
+				<a href="#cust_box_inline" id="cust_product_link" title="Customer Box Details">(why?)</a>
+			<% end %>
+		</td>
+		<td>
+			<% if cart_item.shippable? %>
+				<% if cart_item.get_or_pull_address.fedex_validation_status != Address::VALID %>
+				<b><a href="#explain_invalid_address" onclick='$("#explain_invalid_address_link").trigger("click");'>UNVALIDATED ADDRESS</a></b><br>
+				<% end %>
+				<%= raw address_summary cart_item.get_or_pull_address %><br>
+				<a href="/account/new_checkout_shipping_address?cart_item_id=<%= cart_item.id %>">Choose Other Address</a>
+			<% else %>
+				NA
+			<% end %>
+		</td>
+		<td>
+			<% if cart_item.deletable? %>
+				<a href="/account/check_out_remove_cart_item?id=<%=cart_item.id%>">X</a>
+			<% end %>
+		</td>
+	</tr><% end %> <!-- end loop -->
+</table>
+<hr>
+<div style="text-align:right; position:relative; padding: 0 20px 10px 0;">
+	<% if @cart.contains_ordered_boxes %>
+		New Box Shipping Cost: FREE
+		<br>
+	<% end %>
+	
+	<% if !@cart.contains_only_ordered_boxes %>
+		<% if @cart.contains_ship_charge_items? && !@cart.quoted_shipping_cost_success %>
+			Box return shipping charges: <a href="#explain_tbd_shipping" id="explain_tbd_shipping_link">TBD</a> on shipment date
+		<% elsif @cart.contains_ship_charge_items? %>
+			Box return shipping charges: <%= number_to_currency @cart.quoted_shipping_cost %>
+		<% end %>
+		
+		<% if @cart.contains_item_mailings? %>
+		<br>Item Shipping Charges: TBD (will be emailed)
+		<% end %>
+	<% end %>
+	<br>
+	<%= form_tag "/account/checkout_add_offer_code", :class => "standard", :onsubmit => "offer_submit.disabled=true" do %>
+		Offer Code (optional): <%= text_field_tag :offer_code, "", :class => "textbox", :style => "width: 85px" %> <%= submit_tag "Add Offer Code", :class => "button", :id => "offer_submit" %>
+	<% end %>
+	<br>
+	<br>
+	<b>Total Due Now: <%= number_to_currency(@cart.estimated_total) %></b>
+</div><br>
+<%= form_for @order, :url => "/account/finalize_check_out", :html => { :class => "standard", :onsubmit => "cf_submit.disabled=true;" } do |f| %>
+<% if @cart.contains_new_boxes %> 
+	<div style="margin: auto; float:left; width: 15px; margin-left: 20px; margin-top: 1px"><%= check_box_tag :agreed, 1, params[:agreed].nil? ? false : params[:agreed] == "1" %></div>
+	<div style="float: right; width: 680px; margin-right: 215px"><b>Accept the Rental Agreement:</b> I certify that I have read and agree to the <a id="member_agreement_link" href="/member_agreement_ajax">Member Agreement</a> associated with this service. I understand that I will be responsible for paying all shipping and storage charges billed to my account by thevisiblecloset.com</div>
+<% end %>
+<div class="clearer"></div>
+<div style="text-align: right; padding: 20px 0 0 0">
+	<%= hidden_field_tag "cart_id", @cart.id %>
+	<%= submit_tag("Complete Order", :class => "button", :id => "cf_submit", :onclick => "return formMonitor();") %>
+</div>
+<br>
+<% end %> <!-- end form -->
+<div class="clearer"></div>
+<%= render :partial => "checkout_explanations" %>
+<% # render :partial => "pricing_explainer" %>
+<% # removed when pricing was changed %>

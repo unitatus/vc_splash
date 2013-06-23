@@ -1,0 +1,85 @@
+<div class="<%= field_name %>">
+    <table>
+        <tr>
+            <td colspan="2" class="circle-bg">
+				<% if storage_discount.unit_discount_perc > 0 %>
+					<%= storage_discount.new_product_count %> 
+					<% if storage_discount.product.vc_box? %>
+						Box
+					<% else %>
+						<a href="#cf_explainer" id="cf_explainer_link_<%= fb_incrementer %>" style="color: white; text-decoration: underline;">CuFt</a>
+					<% end %>
+					 - Save <%= number_to_percentage(storage_discount.unit_discount_perc * 100, :precision => 0)%>
+				<% else %>
+					Ad Hoc - Per 
+					<% if storage_discount.product.vc_box? %>
+						Box
+					<% else %>
+						<a href="#cf_explainer" id="cf_explainer_link_<%= fb_incrementer %>" style="color: white; text-decoration: underline;">CuFt</a>
+					<% end %>
+				<% end %>
+			</td>
+        </tr>
+        <tr>
+            <td class="firstcol"><%= number_to_currency(storage_discount.unit_price_after_discount) %></td>
+            <td>storage</td>
+        </tr>
+        <tr>
+            <td class="firstcol to-strike">
+<!-- should be https when site goes back live -->
+				<%= form_tag("http://" + (request.subdomain.blank? ? "" : (request.subdomain + ".")) + request.domain + "/account/order_boxes") do %>
+				<input type="checkbox" name="inventorying_checker" id="inventorying_checker" value="<%= inventory_discount.unit_price_after_discount %>" />
+				<%= number_to_currency(inventory_discount.unit_price_after_discount) %>
+			</td>
+            <td class="to-strike">inventoried</td>
+        </tr>
+		<% if storage_discount.free_shipping? %>
+        <tr>
+            <td class="firstcol"><img src="images/free.gif" alt="free" /></td>
+            <td>shipping to us</td>
+        </tr>
+		<% end %>
+		<% if storage_discount.free_shipping_materials? %>
+        <tr>
+            <td class="firstcol"><img src="images/free.gif" alt="free" /></td>
+            <td>packing materials</td>
+        </tr>
+		<% end %>
+        <tr>
+            <td colspan="2" class="pricing-line"><img src="images/pricing-line.gif" alt="" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="pricing-total">
+				<!-- The following hidden fields are used for dynamic recalculation -->
+					<input type="hidden" name="sans_inv" id="sans_inv" value="<%= number_to_currency(storage_discount.unit_price_after_discount) %>" />
+					<input type="hidden" name="with_inv" id="with_inv" value="<%= number_to_currency(storage_discount.unit_price_after_discount + inventory_discount.unit_price_after_discount) %>" />
+				
+				<p>
+					<% if storage_discount.product.vc_box? %>
+						<div style="margin-top: -15px">
+					<% end %>
+					<strong><%= number_to_currency(storage_discount.unit_price_after_discount) %></strong>
+					<% if storage_discount.product.vc_box? %>
+						</div>
+					<% end %>
+				<div style="padding-top: 5px">
+				<% if storage_discount.product.vc_box? # free shipping materials means vc box %>
+					per box per month
+				<% else %>
+					per cubic foot per month
+				<% end %>
+				</div>
+				</p>
+			</td>
+        </tr>
+    </table>
+	<% if user_signed_in? %>
+			<%= hidden_field_tag 'box_type', (storage_discount.product.vc_box? ? "vc_boxes" : "cust_boxes") %>
+			<%= hidden_field_tag (storage_discount.product.vc_box? ? "num_vc_boxes[num_vc_boxes]" : "num_cust_boxes[num_cust_boxes]"), storage_discount.new_product_count %>
+			<%= hidden_field_tag 'num_months[num_months]', storage_discount.month_count %>
+    		<%= image_submit_tag "pricing-button.gif", :class => "order-button" %>
+	<% else %>
+		<a href="users/register"><img src="images/pricing-sign-up.gif" alt="Sign Up" class="order-button" /></a>
+	<% end %>
+	<% end # form tag %>
+</div>

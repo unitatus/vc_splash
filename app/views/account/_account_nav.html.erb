@@ -1,0 +1,69 @@
+<% active_class_str = " class='active'" %>
+<% boxes_class = ""; items_class = ""; store_class = ""; cart_class = ""; support_class = ""; furniture_class = "" %>
+<% case @menu_page %>
+<% when :boxes %>
+<%   boxes_class = active_class_str %>
+<% when :box %>
+<%   boxes_class = active_class_str %>
+<% when :items %>
+<%   items_class = active_class_str %>
+<% when :store_more_stuff %>
+<%   store_class = active_class_str %>
+<% when :furniture %>
+<%   furniture_class = active_class_str %>
+<% when :support %>
+<%   support_class = active_class_str %>
+<% when :account %>
+<%   account_class = active_class_str %>
+<% end %>
+<!-- SIDE MENU HTML -->
+<div id="internal-left">
+    <div id="side-menu">
+	    <ul>
+	 		<li<%= account_class %>><a href="/account/home">Account</a></li>	
+	        <li<%= store_class %>><a href="/account/store_more_boxes">Store More Stuff</a></li>
+	        <li<%= boxes_class %>><a href="/boxes">Browse Boxes</a></li>
+	        <li<%= items_class %>><a href="/stored_items">Browse Items</a></li>
+	 		<% if current_user.has_published_furniture? %>
+				<li<%= furniture_class %>><a href="/furniture_items">Browse Furniture</a></li>
+			<% end %>
+	        <li<%= support_class %>><a href="/support">Support</a></li>
+	    </ul>
+	</div>
+	<% if @menu_page == :boxes %>
+	<br>
+    <div id="legend">
+        <img src="/images/legend-top.gif" alt="Visible Closet Box States" />
+        <div class="legend-item">
+            <img src="/images/legend-inventory-complete.jpg" alt="Inventory Complete" />
+            <p>You can browse your inventory.</p>
+        </div>
+        <div class="legend-border"></div>
+        <div class="legend-item">
+            <img src="/images/legend-inventory-processing.jpg" alt="Inventory Processing" />
+            <p>Inventorying requested, not complete.</p>
+        </div>
+        <div class="legend-border"></div>
+        <div class="legend-item">
+            <img src="/images/legend-inventory-packed.jpg" alt="Being Packed" />
+            <p>Being packed by you.</p>
+        </div>
+        <div class="legend-border"></div>
+        <div class="legend-item">
+            <img src="/images/legend-inventory-storage.jpg" alt="In Storage" />
+            <p>In storage, no inventorying requested.</p>
+        </div>
+        <div class="legend-border"></div>
+        <div class="legend-item">
+            <img src="/images/legend-inventory-to-us.jpg" alt="To Us" />
+            <p>On a truck to The Visible Closet.</p>
+        </div>
+        <div class="legend-border"></div>
+        <div class="legend-item">
+            <img src="/images/legend-inventory-to-you.jpg" alt="To You" />
+            <p>On a truck to you, or arrived.</p>
+        </div>
+        <img src="/images/legend-bottom.gif" alt="" />
+    </div>
+	<% end %>
+</div>

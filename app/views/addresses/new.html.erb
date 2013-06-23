@@ -1,0 +1,9 @@
+<% @menu_page = :account %>
+<%= render 'account/account_nav', :locals => { :menu_page => @menu_page } %>
+<div id="internal-right">
+	<div class="simple_header">New Address</div>
+	(<%= link_to 'See all addresses', addresses_path %>)
+<br><br>
+<%= render :partial => 'new_form', :locals => { :url => "/addresses"} %>
+</div>
+<div class="clearer"></div>

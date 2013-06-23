@@ -1,0 +1,47 @@
+<STYLE TYPE="text/css">
+     P.breakhere {page-break-before: always}
+</STYLE>
+<%= render "admin/admin_menu", :locals => { :admin_page => @admin_page }%>
+<div id="internal-right">
+	<h1>Coupons Print Page for Offer <a href="/offers/<%= @offer.id %>"><%= @offer.id %></a></h1>
+	<br>
+	<table class="prices_table">
+		<% @offer.coupons.each_with_index do |coupon, index| %>
+		<tr>
+			<td style="width: 600px; text-align: center">
+				<P CLASS="breakhere">
+				
+				<img src="/images/vcLogo_noUnderline.jpg" width="350" height="106">
+				<br><br>
+				<div style="font-size: 25px">
+					COUPON
+				</div>
+				<br>
+				This coupon entitles you to:<br><br>
+					<% @offer.benefits.each do |benefit| %>
+					<% if @offer.benefits.size > 1 %>
+						<li>
+					<% end %>
+						<% if benefit.is_a?(FreeStorageOfferBenefit) %>
+							Free storage at The Visible Closet for <%= pluralize benefit.num_boxes, "box" %> for <%= pluralize benefit.num_months, "month" %>.
+						<% elsif benefit.is_a?(FreeSignupOfferBenefit) %>
+							Signup fee waiver at The Visible Closet for <%= pluralize benefit.num_boxes, "box" %>.
+						<% end %>
+ 					<% if @offer.benefits.size > 1 %>
+						</li>
+					<% end %>
+					<% end %>
+				<br><br>
+				To use this coupon, simply enter the following code when you order boxes or at any time via the "Account" section of www.thevisiblecloset.com.
+				<br>
+				<br>Code:<div style="font-size: 150%"><%= coupon.unique_identifier %></div>
+				<br><br>
+				<div style="font-size: 75%">
+					Offer valid from <%= @offer.start_date.strftime "%B %-d, %Y" %> until <%= @offer.expiration_date.strftime "%B %-d, %Y" %>
+				</div>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+<div class="clearer"></div>
